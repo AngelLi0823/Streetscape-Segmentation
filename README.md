@@ -1,4 +1,4 @@
-# DL Homework 1 — Semantic Segmentation
+# Homework 1 — Semantic Segmentation
 
 ## 一、專案介紹
 
@@ -52,9 +52,6 @@
 └── test/
     └── image
 ```
-
-測試圖片資料夾由程式依實際存在的路徑自動判斷。
-
 ### 3.2 資料檢查
 
 訓練前會進行以下檢查：
