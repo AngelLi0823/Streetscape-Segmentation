@@ -1,4 +1,3 @@
-# Streetscape-Segmentation
 # DL Homework 1 — Semantic Segmentation
 
 ## 一、專案介紹
