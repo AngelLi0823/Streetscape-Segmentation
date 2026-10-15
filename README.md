@@ -177,3 +177,48 @@ Ground Truth Mask 保留原始整數類別 ID，並轉換為 `torch.long`，不�
 
 此模型為本次作業最終選用的模型。
 
+## 六、使用方式
+
+### 6.1 執行訓練程式
+
+執行步驟：
+
+1. 使用 Google Colab 開啟 `DL_HW1.ipynb`。
+2. 將執行階段設定為 GPU。
+3. 將原始資料集 ZIP 檔案放置於 Google Drive 的 `MyDrive`。
+4. 依序執行 Notebook 中的資料解壓縮、資料檢查及 Training / Validation 切分程式。
+5. 依序執行 Baseline Training、第一次 Fine-tuning 及第二次 Class-weighted Fine-tuning。
+
+訓練過程中的模型權重及相關紀錄會儲存於 Google Drive 的 `DL_HW1_outputs` 資料夾。
+
+### 6.2 載入最終模型
+
+本次提交的 `best_weighted_deeplabv3_resnet50.pt` 為已訓練完成的最佳模型，不需要重新訓練即可載入。
+
+將模型檔案放在程式目前的工作目錄下，使用以下程式載入：
+
+```python
+import torch
+from torchvision.models.segmentation import deeplabv3_resnet50
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+model = deeplabv3_resnet50(
+    weights=None,
+    weights_backbone=None,
+    num_classes=24
+)
+
+checkpoint = torch.load(
+    "best_weighted_deeplabv3_resnet50.pt",
+    map_location="cpu",
+    weights_only=False
+)
+
+model.load_state_dict(checkpoint["model_state_dict"], strict=True)
+
+model = model.to(device)
+model.eval()
+
+print("模型載入成功")
+```
